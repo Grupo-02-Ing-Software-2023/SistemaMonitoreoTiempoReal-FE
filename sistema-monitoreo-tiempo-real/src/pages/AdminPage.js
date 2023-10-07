@@ -1,7 +1,7 @@
 
 const AdminPage = () => {
     return(
-        <div className="container-fluid me-3">
+        <div className="container">
             <h2>Admin Tools</h2>
         </div>
     );

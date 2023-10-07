@@ -1,4 +1,10 @@
 /* Sidebar.css */
 .sidebar-container {
-    height: 100vh; /* Set the container height to 100% viewport height */
-  }
+  height: 100vh;
+  /* Set the container height to 100% viewport height */
+}
+
+.active-link {
+  background-color: gray;
+  color: white;
+}
