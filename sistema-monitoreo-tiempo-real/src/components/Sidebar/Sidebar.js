@@ -7,11 +7,11 @@ import {
     CDBSidebarMenuItem,
   } from "cdbreact";
   import { Link } from "react-router-dom";
-  import "./Sidebar.css"; // Import your custom CSS file for styling
+  import "./Sidebar.css"; 
   
   const Sidebar = () => {
     return (
-      <div className="sidebar-container"> {/* Add a container div */}
+      <div className="sidebar-container"> {}
         <CDBSidebar
           textColor="#fff"
           backgroundColor="#333"
@@ -30,6 +30,9 @@ import {
             <CDBSidebarMenu>
               <Link to="/dashboard" className="text-decoration-none">
                 <CDBSidebarMenuItem>Dashboard</CDBSidebarMenuItem>
+              </Link>
+              <Link to="/admin" className="text-decoration-none">
+                <CDBSidebarMenuItem>Admin</CDBSidebarMenuItem>
               </Link>
               <Link to="/profile" className="text-decoration-none">
                 <CDBSidebarMenuItem>Profile</CDBSidebarMenuItem>
