@@ -3,8 +3,8 @@ import {
 	Routes,
 	Route,
   } from "react-router-dom";
-  import HomePage from "./pages/HomePage";
-  import ContactPage from "./pages/ContactPage";
+  import DashboardPage from "./pages/DashboardPage";
+  import ProfilePage from "./pages/ProfilePage";
   import "./App.css";
   import Sidebar from "./components/Sidebar";
   
@@ -14,8 +14,8 @@ import {
 		<Sidebar />
 		  <div style={{ flex: 1, overflowY: "scroll" }}>
 			<Routes>
-			  <Route path="/" element={<HomePage />} />
-			  <Route path="/contact" element={<ContactPage />} />
+			  <Route path="/dashboard" element={<DashboardPage />} />
+			  <Route path="/profile" element={<ProfilePage />} />
 			</Routes>
 		  </div>
 	  </div>

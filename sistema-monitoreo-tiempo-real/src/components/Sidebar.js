@@ -28,17 +28,11 @@ import {
           </CDBSidebarHeader>
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <Link to="/" className="text-decoration-none">
+              <Link to="/dashboard" className="text-decoration-none">
                 <CDBSidebarMenuItem>Dashboard</CDBSidebarMenuItem>
               </Link>
-              <Link to="/contact" className="text-decoration-none">
-                <CDBSidebarMenuItem>Tables</CDBSidebarMenuItem>
-              </Link>
               <Link to="/profile" className="text-decoration-none">
-                <CDBSidebarMenuItem>Profile page</CDBSidebarMenuItem>
-              </Link>
-              <Link to="/analytics" className="text-decoration-none">
-                <CDBSidebarMenuItem>Analytics</CDBSidebarMenuItem>
+                <CDBSidebarMenuItem>Profile</CDBSidebarMenuItem>
               </Link>
             </CDBSidebarMenu>
           </CDBSidebarContent>
