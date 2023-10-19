@@ -37,3 +37,8 @@
     transform: rotate(360deg);
   }
 }
+
+.App-Index-Images {
+  width: 20px;
+  height: auto;
+}

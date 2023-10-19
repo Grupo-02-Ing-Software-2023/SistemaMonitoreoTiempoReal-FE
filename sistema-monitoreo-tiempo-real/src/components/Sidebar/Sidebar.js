@@ -15,8 +15,8 @@ const Sidebar = () => {
     <div className="sidebar-container">
       <CDBSidebar textColor="#fff" backgroundColor="#333" className="sidebar-fixed">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <NavLink to="/" className="text-decoration-none" style={{ color: "inherit" }}>
-            Sidebar
+          <NavLink to="/dashboard" className="text-decoration-none" style={{ color: "inherit" }}>
+            Simotre
           </NavLink>
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
@@ -29,18 +29,32 @@ const Sidebar = () => {
               <CDBSidebarMenuItem>Dashboard</CDBSidebarMenuItem>
             </NavLink>
             <NavLink
-              to="/admin"
+              to="/users"
               className="text-decoration-none"
               activeClassName="active-link" 
             >
-              <CDBSidebarMenuItem>Admin</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem>Usuarios</CDBSidebarMenuItem>
             </NavLink>
             <NavLink
-              to="/profile"
+              to="/employees"
               className="text-decoration-none"
               activeClassName="active-link" 
             >
-              <CDBSidebarMenuItem>Profile</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem>Empleados</CDBSidebarMenuItem>
+            </NavLink>
+            <NavLink
+              to="/sessions"
+              className="text-decoration-none"
+              activeClassName="active-link" 
+            >
+              <CDBSidebarMenuItem>Sesiones</CDBSidebarMenuItem>
+            </NavLink>
+            <NavLink
+              to="/rooms"
+              className="text-decoration-none"
+              activeClassName="active-link" 
+            >
+              <CDBSidebarMenuItem>Salas</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
