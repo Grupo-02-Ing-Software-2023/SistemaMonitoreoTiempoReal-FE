@@ -1,15 +1,20 @@
 import RoomsTable from "../components/Rooms/RoomsTable";
+import { Link } from "react-router-dom";
 
 const RoomsPage = () => {
-    return(
-        <div className="container">
-            <h1 className="text-center">Listado de Salas</h1>
-            <div>
-                <button type="button" className="btn btn-primary btn-lg shadow"> Nueva Sala </button>
-                <RoomsTable />
-            </div>
+  return (
+    <div className="container">
+      <h1 className="text-center">Listado de Salas</h1>
+      <div>
+        <div>
+          <Link to="/new-room" className="btn btn-primary btn-lg shadow">
+            Agregar Sala
+          </Link>
         </div>
-    );
+        <RoomsTable />
+      </div>
+    </div>
+  );
 };
 
 export default RoomsPage;

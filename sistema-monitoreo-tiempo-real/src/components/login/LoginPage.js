@@ -1,53 +1,80 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./login.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
+  return fetch("http://localhost:8080/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
+export default function LoginPage({ setToken }) {
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = await loginUser({
+      username,
+      password,
+    });
+    setToken(token);
+  };
 
-export default function LoginPage({ setToken }){
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
+  return (
+    <div>
+      <style>
+        {`
+          body, html {
+            background-color: #407BFF;
+          }
+        `}
+      </style>
+      <div className="container">
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+          <div className="card text-center bg-white" style={{ maxWidth: "30rem" }}>
+            <div className="card-body">
+              <h3 className="card-title mb-4">Inicio de Sesión</h3>
 
+              <div className="form-group">
+                <strong><label htmlFor="userName">Usuario</label></strong>
+                <input
+                  type="text"
+                  className="form-control pt-2"
+                  id="userName"
+                  placeholder="Ingrese su usuario"
+                  // value={username}
+                  onChange={(e) => setUserName(e.target.value)}
+                />
+              </div>
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginUser({
-          username,
-          password
-        });
-        setToken(token);
-      }
-    
+              <div className="form-group">
+                <strong><label htmlFor="password">Contraseña</label></strong>
+                <input
+                  type="password"
+                  className="form-control pt-2"
+                  id="password"
+                  placeholder="Ingrese su contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
 
-    return (
-        <div className="container">
-            <form  onSubmit={handleSubmit} >
-                <h3 >Inicio de Sesion</h3>
-
-                <label >Usuario</label>
-                <input type="text" placeholder="Ingrese su usuario"  onChange={e => setUserName(e.target.value)}/>
-
-                <label >Contraseña</label>
-                <input type="password" placeholder="Ingrese su contraseña" onChange={e => setPassword(e.target.value)} />
-
-                <button type="submit">Inicio</button>
-            </form>
+              <button type="submit" className="btn btn-primary btn-block mt-4" onClick={handleSubmit}>
+                Iniciar Sesión
+              </button>
+            </div>
+          </div>
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
 
 LoginPage.propTypes = {
-    setToken: PropTypes.func.isRequired
-  }
+  setToken: PropTypes.func.isRequired,
+};

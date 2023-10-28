@@ -50,7 +50,7 @@ const data = [
 
 const SessionsTable = () => {
   return (
-    <div className="mt-4">
+    <div className="mt-4 shadow">
         <DataTable columns={columns} data={data} />
     </div>
   );

@@ -12,7 +12,12 @@ import {
   import ProfilePage from "./pages/ProfilePage";
   import LoginPage from "./components/login/LoginPage";
   import "./App.css";
+  import 'bootstrap/dist/css/bootstrap.css';
   import Sidebar from "./components/Sidebar/Sidebar";
+  import EmployeeFormComponent from './components/Employees/EmployeeForm';
+  import CreateSessionForm from './components/Sessions/CreateSessionForm';
+  import RoomForm from './components/Rooms/RoomForm';
+  import NewUserForm from './components/Users/UserForm';
   
   function App() {
 	const [token, setToken] = useState();
@@ -33,6 +38,10 @@ import {
 			  <Route path="/employees" element={<EmployeesPage />} />
 			  <Route path="/sessions" element={<SessionsPage />} />
 			  <Route path="/rooms" element={<RoomsPage />} />
+			  <Route path="/new-employee" element={<EmployeeFormComponent />} />
+			  <Route path="/new-session" element={<CreateSessionForm />} />
+			  <Route path="/new-room" element={<RoomForm />} />
+			  <Route path="/new-user" element={<NewUserForm />} />
 			</Routes>
 		  </div>
 	  </div>
