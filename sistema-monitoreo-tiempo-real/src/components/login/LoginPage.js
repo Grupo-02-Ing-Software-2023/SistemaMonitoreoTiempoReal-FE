@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import "./login.css";
 import PropTypes from "prop-types";
 
+
+
 async function loginUser(credentials) {
-  return fetch("http://localhost:8080/login", {
+  return fetch("https://igf-backend-production.up.railway.app/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then((data) => data.json());
+  }).then(response =>response.json());
 }
 
 export default function LoginPage({ setToken }) {
@@ -19,9 +21,10 @@ export default function LoginPage({ setToken }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await loginUser({
-      username,
-      password,
+      "email": username,
+      "password": password,
     });
+
     setToken(token);
   };
 
@@ -47,7 +50,7 @@ export default function LoginPage({ setToken }) {
                   className="form-control pt-2"
                   id="userName"
                   placeholder="Ingrese su usuario"
-                  // value={username}
+                  //value={username}
                   onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
@@ -59,7 +62,7 @@ export default function LoginPage({ setToken }) {
                   className="form-control pt-2"
                   id="password"
                   placeholder="Ingrese su contraseña"
-                  value={password}
+                  //value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>

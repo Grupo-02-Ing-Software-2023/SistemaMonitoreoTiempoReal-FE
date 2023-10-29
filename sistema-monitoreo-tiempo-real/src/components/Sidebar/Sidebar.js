@@ -10,6 +10,11 @@ import {
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
+const logout = () => {
+  sessionStorage.removeItem("token");
+  window.location.reload();
+};
+
 const Sidebar = () => {
   return (
     <div className="sidebar-container">
@@ -59,9 +64,25 @@ const Sidebar = () => {
           </CDBSidebarMenu>
         </CDBSidebarContent>
         <CDBSidebarFooter style={{ textAlign: "center" }}>
+        <img
+              className="align-center"
+              src="/minerva.png"
+              alt="Rooms Index"
+              style={{ width: "100px" }}
+            />
+
+
           <div className="sidebar-btn-wrapper" style={{ padding: "20px 5px" }}>
             Universidad de El Salvador
-          </div>
+          </div> 
+            <NavLink
+             onClickCapture={logout}
+              className="text-decoration-none"
+              activeClassName="active-link" 
+              style={{ color: "white" }}
+            >
+              <CDBSidebarMenuItem>Cerrar Sesion</CDBSidebarMenuItem>
+            </NavLink>
         </CDBSidebarFooter>
       </CDBSidebar>
     </div>
