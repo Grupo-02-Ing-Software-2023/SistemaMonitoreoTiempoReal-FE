@@ -11,7 +11,7 @@ async function loginUser(credentials) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-  }).then(response =>response.json());
+  }).then(response =>response.json().then(data =>({'token':data.token})));
 }
 
 export default function LoginPage({ setToken }) {
