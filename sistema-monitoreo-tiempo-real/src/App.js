@@ -11,6 +11,7 @@ import {
   import AdminPage from "./pages/AdminPage";
   import ProfilePage from "./pages/ProfilePage";
   import LoginPage from "./components/login/LoginPage";
+  import usetoken from "./components/login/token";
   import "./App.css";
   import 'bootstrap/dist/css/bootstrap.css';
   import Sidebar from "./components/Sidebar/Sidebar";
@@ -18,9 +19,11 @@ import {
   import CreateSessionForm from './components/Sessions/CreateSessionForm';
   import RoomForm from './components/Rooms/RoomForm';
   import NewUserForm from './components/Users/UserForm';
-  
+
+ 
+
   function App() {
-	const [token, setToken] = useState();
+	const { token, setToken } = usetoken();
 	if(!token) {
 		return <LoginPage setToken={setToken} />
 	  }
@@ -30,7 +33,7 @@ import {
 		<Sidebar />
 		  <div style={{ flex: 1, overflowY: "scroll" }}>
 			<Routes>
-			  <Route path="/dashboard" element={<DashboardPage />} />
+			  <Route path="/dashboard" element={<DashboardPage />}  />
 			  <Route path="/admin" element={<AdminPage />} />
 			  <Route path="/profile" element={<ProfilePage />} />
 			  <Route path="/login" element={<LoginPage />} />
