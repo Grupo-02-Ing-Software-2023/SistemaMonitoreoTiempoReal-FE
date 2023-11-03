@@ -20,14 +20,14 @@ const Sidebar = () => {
     <div className="sidebar-container">
       <CDBSidebar textColor="#fff" backgroundColor="#333" className="sidebar-fixed">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <NavLink to="/dashboard" className="text-decoration-none" style={{ color: "inherit" }}>
+          <NavLink to="/" className="text-decoration-none" style={{ color: "inherit" }}>
             Simotre
           </NavLink>
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink
-              to="/dashboard"
+              to="/"
               className="text-decoration-none"
               activeClassName="active-link" 
             >

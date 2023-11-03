@@ -2,9 +2,9 @@ import React, { useState } from "react";
 
 const EmployeeFormComponent = () => {
   const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
-    id: "",
+    cod_empleado: "",
+    nom_empleado: "",
+    dui: "",
   });
 
   const handleChange = (event) => {
@@ -13,47 +13,82 @@ const EmployeeFormComponent = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("A form was submitted: ", state);
+
+    const data = {
+      cod_empleado: state.cod_empleado,
+      nom_empleado: state.nom_empleado,
+      dui: state.dui,
+    };
+
+    fetch("https://igf-backend-production.up.railway.app/api/empleados/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (responseData.success) {
+          alert("Guardado Exitosamente");
+          setState({
+            cod_empleado: "",
+            nom_empleado: "",
+            dui: "",
+          });
+        } else {
+          alert("Error al guardar");
+          setState({
+            cod_empleado: "",
+            nom_empleado: "",
+            dui: "",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("API Request Error: ", error);
+        alert("Error al guardar");
+      });
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center"> Nuevo Empleado </h1>
+      <h1 className="text-center">Nuevo Empleado</h1>
       <div className="d-flex align-items-center">
         <div className="col-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <strong>
-                <label htmlFor="firstName">Nombre:</label>
+                <label htmlFor="cod_empleado">Código Empleado:</label>
               </strong>
               <input
                 type="text"
-                name="firstName"
-                value={state.firstName}
+                name="cod_empleado"
+                value={state.cod_empleado}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
             <div className="form-group pt-2">
               <strong>
-                <label htmlFor="lastName">Apellido:</label>
+                <label htmlFor="nom_empleado">Nombre Empleado:</label>
               </strong>
               <input
                 type="text"
-                name="lastName"
-                value={state.lastName}
+                name="nom_empleado"
+                value={state.nom_empleado}
                 onChange={handleChange}
                 className="form-control"
               />
             </div>
             <div className="form-group pt-2">
               <strong>
-                <label htmlFor="id">DUI:</label>
+                <label htmlFor="dui">DUI:</label>
               </strong>
               <input
                 type="text"
-                name="id"
-                value={state.id}
+                name="dui"
+                value={state.dui}
                 onChange={handleChange}
                 className="form-control"
               />
@@ -65,8 +100,6 @@ const EmployeeFormComponent = () => {
         </div>
         <div className="col-6">
           <div className="text-center">
-            {" "}
-            {/* Añade text-center */}
             <img
               className="align-center"
               src="/new-employee.png"

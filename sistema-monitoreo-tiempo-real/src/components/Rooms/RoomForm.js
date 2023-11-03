@@ -1,61 +1,109 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const RoomForm = ({ roomName, setRoomName, employeeList, setEmployeeList }) => {
-  const [selectedEmployee, setSelectedEmployee] = useState("");
+const RoomForm = () => {
+  const [state, setState] = useState({
+    cod_sala: "",
+    nom_sala: "",
+    categoria_sala: "",
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setRoomName(selectedEmployee);
-    setEmployeeList(
-      employeeList.filter((employee) => employee !== selectedEmployee)
-    );
-    setSelectedEmployee("");
+  const [token, setToken] = useState(""); // Define the token state variable
+
+  useEffect(() => {
+    // Obtener el token del local storage en un efecto separado
+    const storedToken = JSON.parse(sessionStorage.getItem('token'));
+    if (storedToken) {
+      setToken(storedToken.token);
+    }
+  }, []);
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      cod_sala: state.cod_sala,
+      nom_sala: state.nom_sala,
+      categoria_sala: state.categoria_sala,
+    };
+
+    fetch("https://igf-backend-production.up.railway.app/api/salas/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": token, // Add the token to the headers
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (responseData.success) {
+          alert("Guardado Exitosamente");
+          setState({
+            cod_sala: "",
+            nom_sala: "",
+            categoria_sala: "",
+          });
+        } else {
+          alert("Error al guardar");
+          setState({
+            cod_sala: "",
+            nom_sala: "",
+            categoria_sala: "",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("API Request Error: ", error);
+        alert("Error al guardar");
+      });
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center"> Nueva Sala </h1>
+      <h1 className="text-center">Nueva Sala</h1>
       <div className="d-flex align-items-center">
         <div className="col-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <strong><label htmlFor="roomName">Nombre de Sala:</label></strong>
+              <strong>
+                <label htmlFor="cod_sala">Código Sala:</label>
+              </strong>
               <input
                 type="text"
+                name="cod_sala"
+                value={state.cod_sala}
+                onChange={handleChange}
                 className="form-control"
-                value={roomName}
-                onChange={(e) => setRoomName(e.target.value)}
               />
             </div>
             <div className="form-group pt-2">
-              <strong><label htmlFor="screenshotPerSession">
-                Empleados
-              </label></strong>
-              <select
+              <strong>
+                <label htmlFor="nom_sala">Nombre Sala:</label>
+              </strong>
+              <input
+                type="text"
+                name="nom_sala"
+                value={state.nom_sala}
+                onChange={handleChange}
                 className="form-control"
-              >
-                <option value="">---</option>
-                <option value="1">Kevin Villalta</option>
-                <option value="2">Kevin Lemus</option>
-                <option value="3">Marlón Coreas</option>
-              </select>
+              />
             </div>
-
-            {/* <div className="form-group">
-        <label htmlFor="selectedEmployee">Employee:</label>
-        <select
-          className="form-control"
-          value={selectedEmployee}
-          onChange={(e) => setSelectedEmployee(e.target.value)}
-        >
-          <option value="">None</option>
-          {employeeList.map((employee) => (
-            <option key={employee} value={employee}>
-              {employee}
-            </option>
-          ))}
-        </select>
-      </div> */}
+            <div className="form-group pt-2">
+              <strong>
+                <label htmlFor="categoria_sala">Categoria Sala:</label>
+              </strong>
+              <input
+                type="text"
+                name="categoria_sala"
+                value={state.categoria_sala}
+                onChange={handleChange}
+                className="form-control"
+              />
+            </div>
             <button type="submit" className="btn btn-primary mt-3">
               Guardar
             </button>
@@ -63,10 +111,9 @@ const RoomForm = ({ roomName, setRoomName, employeeList, setEmployeeList }) => {
         </div>
         <div className="col-6">
           <div className="text-center">
-            {" "}
             <img
               className="align-center"
-              src="/room-img.png"
+              src="/new-employee.png"
               alt="Rooms Index"
               style={{ width: "750px" }}
             />

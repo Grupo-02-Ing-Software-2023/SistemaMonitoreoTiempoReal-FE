@@ -1,50 +1,57 @@
+import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
+import axios from "axios";
+
+const DeleteButton = ({ userId, handleDeleteUser }) => (
+  <button className="btn btn-danger btn-sm m-1" onClick={() => handleDeleteUser(userId)}>
+    Eliminar
+  </button>
+);
 
 const columns = [
   {
-    name: "Código",
-    selector: (row) => row.id,
-  },
-  {
     name: "Nombre de Sala",
-    selector: (row) => row.nombre,
+    selector: (row) => row.nom_sala,
   },
   {
     name: "Opciones de Gestión",
     cell: (row) => (
-      <div className="d-flex" style={{width: '100%', justifyContent: 'space-between'}}>
+      <div className="d-flex" style={{ width: "100%", justifyContent: "space-between" }}>
         <button className="btn btn-outline-primary btn-sm m-1">Ver</button>
         <button className="btn btn-outline-secondary btn-sm m-1">Editar</button>
-        <button className="btn btn-danger btn-sm m-1">Eliminar</button>
+        <DeleteButton userId={row._id} handleDeleteUser={row.handleDeleteUser} />
       </div>
     ),
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    nombre: "Sala de Departamento de QA",
-    opciones: "Ver - Editar - Eliminar",
-  },
-  {
-    id: 2,
-    nombre: "Sala de Departamento de Desarrollo",
-    opciones: "Ver - Editar - Eliminar",
-  },
-  {
-    id: 3,
-    nombre: "Sala de Departamento de Diseño",
-    opciones: "Ver - Editar - Eliminar",
-  },
-  {
-    id: 4,
-    nombre: "Sala de Departamento de Produc Owners",
-    opciones: "Ver - Editar - Eliminar",
-  },
-];
-
 const RoomsTable = () => {
+  const [data, setData] = useState([]);
+  const [token, setToken] = useState();
+
+  // Obtener el token del local storage en un efecto separado
+  useEffect(() => {
+    const storedToken = JSON.parse(sessionStorage.getItem('token'));
+
+    setToken(storedToken.token);
+  }, []);
+
+  // Realizar la solicitud a la API una vez que el token esté disponible
+  useEffect(() => {
+    if (token) {
+      axios.get('https://igf-backend-production.up.railway.app/api/salas/', {
+        headers: {
+          'x-token': token,
+        },
+      })
+      .then((response) => {
+        setData(response.data.salas);
+      })
+      .catch((error) => {
+        console.error("Error fetching data from the API", error);
+      });
+    }
+  }, [token]);
 
   return (
     <div className="mt-4 shadow">

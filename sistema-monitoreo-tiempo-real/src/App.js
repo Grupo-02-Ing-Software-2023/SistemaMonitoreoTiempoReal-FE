@@ -33,7 +33,7 @@ import {
 		<Sidebar />
 		  <div style={{ flex: 1, overflowY: "scroll" }}>
 			<Routes>
-			  <Route path="/dashboard" element={<DashboardPage />}  />
+			  <Route path="/" element={<DashboardPage />}  />
 			  <Route path="/admin" element={<AdminPage />} />
 			  <Route path="/profile" element={<ProfilePage />} />
 			  <Route path="/login" element={<LoginPage />} />

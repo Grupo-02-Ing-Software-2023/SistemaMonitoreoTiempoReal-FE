@@ -1,25 +1,49 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const NewUserForm = () => {
   const [form, setForm] = useState({
     username: "",
-    role: "",
     password: "",
     email: "",
+    url_img: "",
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted: ", form);
+    try {
+      const response = await axios.post("https://igf-backend-production.up.railway.app/api/usuarios", {
+        nom_usuario: form.username,
+        email: form.email,
+        password: form.password,
+        img_url: form.url_img,
+      });
+
+      // Limpia los campos después de un envío exitoso
+      setForm({
+        username: "",
+        password: "",
+        email: "",
+        url_img: "",
+      });
+
+      // Muestra el mensaje de éxito
+      alert("Guardado exitoso");
+
+      console.log("Form Submitted: ", form);
+      console.log("API Response: ", response.data);
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+    }
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center"> Nuevo Usuario </h1>
+      <h1 className="text-center">Nuevo Usuario</h1>
       <div className="d-flex align-items-center">
         <div className="col-6">
           <form onSubmit={handleSubmit}>
@@ -32,19 +56,6 @@ const NewUserForm = () => {
                 value={form.username}
                 onChange={handleChange}
               />
-            </div>
-            <div className="form-group pt-2">
-              <strong><label htmlFor="role">Rol:</label></strong>
-              <select
-                name="role"
-                className="form-control"
-                value={form.role}
-                onChange={handleChange}
-              >
-                <option value="">Ninguno</option>
-                <option value="supervisor">Supervisor</option>
-                <option value="empleado">Empleado</option>
-              </select>
             </div>
             <div className="form-group pt-2">
               <strong><label htmlFor="password">Contraseña:</label></strong>
@@ -63,6 +74,16 @@ const NewUserForm = () => {
                 name="email"
                 className="form-control"
                 value={form.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-group pt-2">
+              <strong><label htmlFor="url_img">Url de Imagen:</label></strong>
+              <input
+                type="text"
+                name="url_img"
+                className="form-control"
+                value={form.url_img}
                 onChange={handleChange}
               />
             </div>
