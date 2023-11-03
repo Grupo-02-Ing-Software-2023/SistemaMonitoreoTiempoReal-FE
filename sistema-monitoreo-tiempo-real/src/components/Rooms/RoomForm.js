@@ -7,10 +7,9 @@ const RoomForm = () => {
     categoria_sala: "",
   });
 
-  const [token, setToken] = useState(""); // Define the token state variable
+  const [token, setToken] = useState(""); 
 
   useEffect(() => {
-    // Obtener el token del local storage en un efecto separado
     const storedToken = JSON.parse(sessionStorage.getItem('token'));
     if (storedToken) {
       setToken(storedToken.token);
