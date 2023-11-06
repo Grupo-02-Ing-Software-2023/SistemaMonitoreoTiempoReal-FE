@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import UserDetails from "./UserDetails";
 import DataTable from "react-data-table-component";
 import axios from "axios";
+
+const DetailsButton = ({ userId, handleDeleteUser, setSelectedUserId }) => (
+  <button className="btn btn-primary btn-sm m-1" onClick={() => setSelectedUserId(userId)}>
+    Ver
+  </button>
+);
 
 const DeleteButton = ({ userId, handleDeleteUser }) => (
   <button className="btn btn-danger btn-sm m-1" onClick={() => handleDeleteUser(userId)}>
@@ -21,7 +28,7 @@ const columns = [
     name: "Opciones de Gestión",
     cell: (row) => (
       <div className="d-flex" style={{ width: "100%", justifyContent: "space-between" }}>
-        <button className="btn btn-outline-primary btn-sm m-1">Ver</button>
+        <DetailsButton userId={row._id} handleDeleteUser={row.handleDeleteUser} setSelectedUserId={row.setSelectedUserId} />
         <button className="btn btn-outline-secondary btn-sm m-1">Editar</button>
         <DeleteButton userId={row._id} handleDeleteUser={row.handleDeleteUser} />
       </div>
@@ -32,10 +39,12 @@ const columns = [
 const UsersTable = () => {
   const [data, setData] = useState([]);
   const [token, setToken] = useState();
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const apiUrl = 'https://igf-backend-production.up.railway.app/api/usuarios/';
 
   useEffect(() => {
     const storedToken = JSON.parse(sessionStorage.getItem("token"));
-
     setToken(storedToken.token);
   }, []);
 
@@ -47,13 +56,15 @@ const UsersTable = () => {
 
   const fetchData = () => {
     axios
-      .get("https://igf-backend-production.up.railway.app/api/usuarios", {
+      .get(apiUrl, {
         headers: {
           "x-token": token,
         },
       })
       .then((response) => {
-        setData(response.data.usuarios.map((user) => ({ ...user, handleDeleteUser })));
+        setData(
+          response.data.usuarios.map((user) => ({ ...user, handleDeleteUser, setSelectedUserId }))
+        );
       })
       .catch((error) => {
         console.error("Error fetching data from the API", error);
@@ -62,14 +73,13 @@ const UsersTable = () => {
 
   const handleDeleteUser = (userId) => {
     axios
-      .delete(`https://igf-backend-production.up.railway.app/api/usuarios/${userId}`, {
+      .delete(apiUrl + userId, {
         headers: {
           "x-token": token,
         },
       })
       .then((response) => {
         console.log("Usuario eliminado con éxito");
-        // Después de eliminar, volvemos a cargar los datos
         fetchData();
       })
       .catch((error) => {
@@ -79,7 +89,7 @@ const UsersTable = () => {
 
   const conditionalRowStyles = [
     {
-      when: (row) => row._id === "some-condition", // Puedes agregar una condición para aplicar estilos específicos a las filas.
+      when: (row) => row._id === "some-condition",
       style: {
         backgroundColor: "rgba(255, 0, 0, 0.3)",
       },
@@ -89,6 +99,7 @@ const UsersTable = () => {
   return (
     <div className="mt-4 shadow">
       <DataTable columns={columns} data={data} conditionalRowStyles={conditionalRowStyles} />
+      {selectedUserId && <UserDetails userId={selectedUserId} token={token} />}
     </div>
   );
 };
